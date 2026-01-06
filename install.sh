@@ -11,8 +11,8 @@ THEME_NAME="horizon"
 GTK_THEME_NAME="horizon-BL-MB-Dark"
 
 echo "╔══════════════════════════════════════════════════════════════════╗"
-echo "║           horizon Hyprland Theme - Installation                  ║"
-echo "║      A dark theme for Hyprland        ║"
+echo "║              Horizon Hyprland Theme - Installation               ║"
+echo "║                   A light theme for Hyprland                     ║"
 echo "╚══════════════════════════════════════════════════════════════════╝"
 echo ""
 
