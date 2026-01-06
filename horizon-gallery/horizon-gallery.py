@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Arkride Character Dot Matrix Display
+Horizon Character Dot Matrix Display
 Converts character images to colored ASCII art using their theme colors
 
-Usage: python arkride-gallery.py [portrait|side]
-  portrait - Full portrait images (8 characters, 2 rows of 4)
-  side     - Side profile images (7 characters, row of 4 + row of 3)
+Usage: python horizon-gallery.py [portrait|side]
+  portrait - Full portrait images (7 characters, row of 3 + row of 4)
+  side     - Side profile images (7 characters, row of 3 + row of 4)
 
 Arch Linux: sudo pacman -S python-pillow
 """
@@ -15,35 +15,32 @@ import sys
 import os
 import time
 
-# Character color palettes (main color, accent)
+# Character color palettes (main color, accent) - from _colors.scss
 PALETTES = {
-    'van': ('#5080C0', '#70A0D8'),
-    'agnes': ('#EA7475', '#f09090'),
-    'feri': ('#F8BA65', '#ffc97a'),
-    'aaron': ('#D94848', '#E86060'),
-    'risette': ('#A4D8EC', '#bce8f8'),
-    'quatre': ('#7F7B78', '#9a9694'),
-    'judith': ('#E07840', '#F09058'),
-    'bergard': ('#A86078', '#C07890'),
-    'elaine': ('#52B5A4', '#6ECFBE'),
+    'rean': ('#6B6259', '#7D746A'),
+    'van': ('#3D5A80', '#4E6D94'),
+    'kevin': ('#6A9E3D', '#7DB34E'),
+    'emilia': ('#9A8C40', '#ADA050'),
+    'agnes': ('#8A5070', '#9D6283'),
+    'grandmaster': ('#9B7BC4', '#AE8ED5'),
+    'aaron': ('#B84444', '#CC5858'),
 }
 
 # Darker base for shading
 DARK_BASE = {
-    'van': '#1a2535',
-    'agnes': '#2a1515',
-    'feri': '#2a2010',
-    'aaron': '#2a1010',
-    'risette': '#152025',
-    'quatre': '#1a1a1a',
-    'judith': '#2a1810',
-    'bergard': '#251820',
+    'rean': '#1a1815',
+    'van': '#101820',
+    'kevin': '#152010',
+    'emilia': '#201c10',
+    'agnes': '#1a1018',
+    'grandmaster': '#181028',
+    'aaron': '#201010',
 }
 
 # Braille base character
 BRAILLE_BASE = 0x2800
 
-# Background color from Arkride Neovim theme (bg0)
+# Background color from Horizon theme (bg0)
 BG_COLOR = (19, 23, 29)  # #13171d
 
 def hex_to_rgb(hex_color):
@@ -306,7 +303,7 @@ def main():
     # Get script directory for relative paths
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Set background color (bg0 from Arkride Neovim theme: #13171d)
+    # Set background color (bg0 from Horizon theme: #13171d)
     bg_ansi = rgb_to_ansi_bg_only()
     print(bg_ansi + '\033[2J\033[H')  # Clear screen with background
 
@@ -315,38 +312,37 @@ def main():
     FG4 = '\033[38;2;107;120;136m'
     RESET = '\033[0m'
 
-    print(bg_ansi + VAN + '  Arkride Theme' + FG4 + ' - Trails through Daybreak Character Gallery' + RESET)
+    print(bg_ansi + VAN + '  Horizon Theme' + FG4 + ' - Character Gallery' + RESET)
     print(bg_ansi)
 
     if mode == 'portrait':
-        # Portrait mode: 8 characters in 2 rows of 4
+        # Portrait mode: 7 characters in 1 row
         characters = [
+            ('rean', 'portrait/rean.webp'),
             ('van', 'portrait/van.webp'),
+            ('kevin', 'portrait/kevin.webp'),
+            ('emilia', 'portrait/emilia.webp'),
             ('agnes', 'portrait/agnes.webp'),
-            ('feri', 'portrait/feri.webp'),
+            ('grandmaster', 'portrait/grandmaster.webp'),
             ('aaron', 'portrait/aaron.webp'),
-            ('risette', 'portrait/risette.webp'),
-            ('quatre', 'portrait/quatre.webp'),
-            ('judith', 'portrait/judith.webp'),
-            ('bergard', 'portrait/bergard.webp'),
         ]
-        CHAR_WIDTH = 16
-        CHAR_HEIGHT = 18
-        rows = [(0, 4), (4, 8)]
+        CHAR_WIDTH = 26
+        CHAR_HEIGHT = 26
+        rows = [(0, 7)]
     else:
-        # Side mode: 7 characters in row of 4 + row of 3
+        # Side mode: 7 characters in 1 row
         characters = [
+            ('rean', 'side/rean.webp'),
             ('van', 'side/van.webp'),
+            ('kevin', 'side/kevin.webp'),
+            ('emilia', 'side/emilia.webp'),
             ('agnes', 'side/agnes.webp'),
-            ('feri', 'side/feri.webp'),
+            ('grandmaster', 'side/grandmaster.webp'),
             ('aaron', 'side/aaron.webp'),
-            ('risette', 'side/risette.webp'),
-            ('quatre', 'side/quatre.webp'),
-            ('judith', 'side/judith.webp'),
         ]
-        CHAR_WIDTH = 20
-        CHAR_HEIGHT = 10
-        rows = [(0, 4), (4, 7)]
+        CHAR_WIDTH = 26
+        CHAR_HEIGHT = 26
+        rows = [(0, 7)]
 
     # Convert all images
     arts = []
