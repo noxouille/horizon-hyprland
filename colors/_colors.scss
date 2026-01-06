@@ -1,0 +1,127 @@
+// ============================================================================
+// Horizon Hyprland Theme - Master Color Palette
+// ============================================================================
+// Inspired by "Trails beyond the Horizon"
+// Colors based on the crossover protagonists and artifacts
+// ============================================================================
+
+// Character Colors
+// ---------------------------
+// Van:                 #3D5A80 - Steel blue (Primary/Functions)
+// Kevin:               #6A9E3D - Vibrant green (Strings/Success)
+// Rean:                #6B6259 - Warm ash (Properties)
+// Agnès:               #8A5070 - Dusty burgundy (Keywords)
+// Emilia:              #9A8C40 - Olive gold (Constants)
+// Grandmaster:         #9B7BC4 - Orchid violet (Decorators)
+// Laegjarn's Chest:    #40B5A8 - Crystal cyan (Types/Info)
+// Horizon:             #D4A855 - Golden amber (Warnings)
+// Aaron:               #B84444 - Crimson red (Errors)
+
+// ============================================================================
+// Base Palette - Light Theme (Warm Parchment)
+// ============================================================================
+
+// Backgrounds (warm ivory to soft taupe)
+$bg0: #FDFBF7;      // Lightest - main editor
+$bg1: #F7F4EE;      // Sidebars, panels
+$bg2: #F0EBE3;      // Elevated surfaces
+$bg3: #E6E0D6;      // Hover states, selections
+$bg4: #D9D2C7;      // Borders, separators
+$bg5: #C7BFB2;      // Strong borders, scrollbars
+
+// Foregrounds (warm charcoal spectrum)
+$fg0: #2D2A26;      // Darkest - headings, emphasis
+$fg1: #3D3935;      // Primary text
+$fg2: #524D47;      // Body text
+$fg3: #736B63;      // Subtle text, labels
+$fg4: #958B80;      // Muted - comments, placeholders
+$fg5: #B5AA9D;      // Very muted, disabled
+
+// ============================================================================
+// Character Colors
+// ============================================================================
+
+// Van Arkride - Steel blue protagonist
+$van: #3D5A80;
+$van-bright: #4E6D94;
+
+// Kevin Graham - Vibrant green priest
+$kevin: #6A9E3D;
+$kevin-bright: #7DB34E;
+
+// Rean Schwarzer - Ashen Chevalier
+$rean: #6B6259;
+$rean-bright: #7D746A;
+
+// Agnès Claudel - Dusty burgundy wielder
+$agnes: #8A5070;
+$agnes-bright: #9D6283;
+
+// Emilia - Olive gold racer
+$emilia: #9A8C40;
+$emilia-bright: #ADA050;
+
+// Grandmaster - Orchid violet enigma
+$grandmaster: #9B7BC4;
+$grandmaster-bright: #AE8ED5;
+
+// Laegjarn's Chest - Crystal cyan artifact
+$laegjarn: #40B5A8;
+$laegjarn-bright: #55C7BA;
+
+// Horizon - Golden amber (dawn/sunset motif)
+$horizon: #D4A855;
+$horizon-bright: #E0B966;
+
+// Aaron Wei - Crimson red swordsman
+$aaron: #B84444;
+$aaron-bright: #CC5858;
+
+// ============================================================================
+// Semantic Mapping
+// ============================================================================
+
+$primary: $van;
+$secondary: $agnes;
+$accent: $laegjarn;
+$warning: $horizon;
+$error: $aaron;
+$success: $kevin;
+$info: $laegjarn;
+
+// ============================================================================
+// Terminal 16-Color Mapping
+// ============================================================================
+
+$term-black: $fg2;               // #524D47
+$term-red: $aaron;               // #B84444
+$term-green: $kevin;             // #6A9E3D
+$term-yellow: $horizon;          // #D4A855
+$term-blue: $van;                // #3D5A80
+$term-magenta: $grandmaster;     // #9B7BC4
+$term-cyan: $laegjarn;           // #40B5A8
+$term-white: $bg2;               // #F0EBE3
+
+$term-bright-black: $fg3;                // #736B63
+$term-bright-red: $aaron-bright;         // #CC5858
+$term-bright-green: $kevin-bright;       // #7DB34E
+$term-bright-yellow: $horizon-bright;    // #E0B966
+$term-bright-blue: $van-bright;          // #4E6D94
+$term-bright-magenta: $grandmaster-bright; // #AE8ED5
+$term-bright-cyan: $laegjarn-bright;     // #55C7BA
+$term-bright-white: $bg0;                // #FDFBF7
+
+// ============================================================================
+// Syntax Highlighting Mapping
+// ============================================================================
+
+$syntax-keyword: $agnes;           // Keywords, control flow
+$syntax-function: $van;            // Functions, methods
+$syntax-string: $kevin;            // Strings, literals
+$syntax-constant: $emilia;         // Constants, numbers
+$syntax-type: $laegjarn;           // Types, classes
+$syntax-property: $rean;           // Properties, attributes
+$syntax-decorator: $grandmaster;   // Decorators, annotations
+$syntax-comment: $fg4;             // Comments
+$syntax-error: $aaron;             // Errors, invalid
+$syntax-warning: $horizon;         // Warnings, deprecated
