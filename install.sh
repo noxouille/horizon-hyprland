@@ -8,7 +8,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 THEME_NAME="horizon"
-GTK_THEME_NAME="horizon-BL-MB-Dark"
+GTK_THEME_NAME="Horizon-BL-MB-Dark"
 
 echo "╔══════════════════════════════════════════════════════════════════╗"
 echo "║              Horizon Hyprland Theme - Installation               ║"
@@ -67,13 +67,13 @@ install_gtk() {
   mkdir -p ~/.themes/${GTK_THEME_NAME}/gtk-3.0
 
   # Copy GTK3 theme files
-  cp "${SCRIPT_DIR}/themes/horizon/index.theme" ~/.themes/${GTK_THEME_NAME}/
-  cp "${SCRIPT_DIR}/themes/horizon/gtk-3.0/gtk.css" ~/.themes/${GTK_THEME_NAME}/gtk-3.0/
+  cp "${SCRIPT_DIR}/themes/Horizon/index.theme" ~/.themes/${GTK_THEME_NAME}/
+  cp "${SCRIPT_DIR}/themes/Horizon/gtk-3.0/gtk.css" ~/.themes/${GTK_THEME_NAME}/gtk-3.0/
 
   # Update index.theme with correct name
-  sed -i "s/Name=horizon/Name=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
-  sed -i "s/GtkTheme=horizon/GtkTheme=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
-  sed -i "s/MetacityTheme=horizon/MetacityTheme=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
+  sed -i "s/Name=Horizon/Name=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
+  sed -i "s/GtkTheme=Horizon/GtkTheme=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
+  sed -i "s/MetacityTheme=Horizon/MetacityTheme=${GTK_THEME_NAME}/" ~/.themes/${GTK_THEME_NAME}/index.theme
 
   success "GTK3 theme installed to ~/.themes/${GTK_THEME_NAME}/"
   echo ""

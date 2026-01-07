@@ -1,47 +1,63 @@
-# horizon Color Palette
+# Horizon Color Palette
 
-Colors based on **horizon Solutions** employees from Kuro no Kiseki.
+Light theme inspired by **Trails beyond the Horizon** (Kai no Kiseki Edition).
+Colors based on the crossover protagonists and artifacts.
 
 ## Character Colors
 
 | Character | Hex | Usage |
 |-----------|-----|-------|
-| **Van horizon** | `#3D5A80` | Primary, functions, links |
-| **Agnès Claudel** | `#8A5070` | Keywords, control flow |
-| **Feri Al-Fayed** | `#F8BA65` | Numbers, constants, warnings |
-| **Aaron Wei** | `#B84444` | Errors, danger |
-| **Risette Twinings** | `#A4D8EC` | Types, classes, info |
-| **Quatre Salision** | `#7F7B78` | Properties, attributes |
-| **Judith Ranster** | `#E07840` | Decorators |
-| **Bergard Zeman** | `#A86078` | Deprecated |
-| **Elaine Auclair** | `#52B5A4` | Strings, success |
+| **Van Arkride** | `#1E3A5F` | Primary, functions, links (PROMINENT) |
+| **Kevin Graham** | `#2E7D32` | Strings, success (PROMINENT) |
+| **Rean Schwarzer** | `#4A423B` | Properties, attributes (PROMINENT) |
+| **Agnès Claudel** | `#AD1457` | Keywords, control flow |
+| **Emilia** | `#704700` | Constants, numbers (darkened for light theme) |
+| **Grandmaster** | `#6A1B9A` | Decorators, annotations |
+| **Laegjarn's Chest** | `#005A4F` | Types, classes, info (darkened for light theme) |
+| **Horizon** | `#BF4400` | Warnings, deprecated (darkened for light theme) |
+| **Aaron Wei** | `#C62828` | Errors, danger |
 
-## Base Colors
+## Base Colors (Warm Gray from Kai art)
 
 | Name | Hex | Usage |
 |------|-----|-------|
-| `bg0` | `#FDFBF7` | Darkest background |
-| `bg1` | `#F7F4EE` | Sidebar, inactive |
-| `bg2` | `#F0EBE3` | Main background |
-| `bg3` | `#E6E0D6` | Elevated surfaces |
-| `bg4` | `#D9D2C7` | UI elements |
-| `bg5` | `#C7BFB2` | Borders |
-| `fg0` | `#2D2A26` | Brightest text |
-| `fg1` | `#3D3935` | Primary text |
-| `fg2` | `#524D47` | Main text |
-| `fg3` | `#736B63` | Subtle text |
-| `fg4` | `#958B80` | Comments |
-| `fg5` | `#B5AA9D` | Very muted |
+| `bg0` | `#D8D4D0` | Lightest - main background |
+| `bg1` | `#CEC9C5` | Sidebars, panels |
+| `bg2` | `#C4BFBA` | Elevated surfaces |
+| `bg3` | `#BAB4AF` | Hover states, selections |
+| `bg4` | `#A8A29D` | Borders, separators |
+| `bg5` | `#8A8480` | Strong borders, scrollbars |
+| `fg0` | `#1A1816` | Darkest - headings, emphasis |
+| `fg1` | `#2A2826` | Primary text |
+| `fg2` | `#3A3836` | Body text |
+| `fg3` | `#5A5856` | Subtle text, labels |
+| `fg4` | `#6A6866` | Comments, placeholders |
+| `fg5` | `#8A8886` | Very muted, disabled |
 
 ## Terminal 16 Colors
 
 | Color | Normal | Bright |
 |-------|--------|--------|
-| Black | `#FDFBF7` | `#C7BFB2` |
-| Red | `#B84444` | `#CC5858` |
-| Green | `#52B5A4` | `#6ECFBE` |
-| Yellow | `#F8BA65` | `#ffc97a` |
-| Blue | `#3D5A80` | `#4E6D94` |
-| Magenta | `#8A5070` | `#9D6283` |
-| Cyan | `#A4D8EC` | `#bce8f8` |
-| White | `#524D47` | `#2D2A26` |
+| Black | `#3A3836` | `#6A6866` |
+| Red | `#C62828` | `#D32F2F` |
+| Green | `#2E7D32` | `#4A7E2D` |
+| Yellow | `#704700` | `#8B5A00` |
+| Blue | `#1E3A5F` | `#2D4A6E` |
+| Magenta | `#6A1B9A` | `#7B1FA2` |
+| Cyan | `#005A4F` | `#00695C` |
+| White | `#C4BFBA` | `#D8D4D0` |
+
+## Syntax Highlighting
+
+| Element | Color | Character |
+|---------|-------|-----------|
+| Keywords | `#AD1457` | Agnès |
+| Functions | `#1E3A5F` | Van |
+| Strings | `#2E7D32` | Kevin |
+| Constants | `#704700` | Emilia |
+| Types | `#005A4F` | Laegjarn |
+| Properties | `#4A423B` | Rean |
+| Decorators | `#6A1B9A` | Grandmaster |
+| Comments | `#6A6866` | - |
+| Errors | `#C62828` | Aaron |
+| Warnings | `#BF4400` | Horizon |

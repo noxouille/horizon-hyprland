@@ -15,33 +15,33 @@ import sys
 import os
 import time
 
-# Character color palettes (main color, accent) - from _colors.scss
+# Character color palettes (main color, accent) - enhanced for light theme contrast
 PALETTES = {
-    'rean': ('#6B6259', '#7D746A'),
-    'van': ('#3D5A80', '#4E6D94'),
-    'kevin': ('#6A9E3D', '#7DB34E'),
-    'emilia': ('#9A8C40', '#ADA050'),
-    'agnes': ('#8A5070', '#9D6283'),
-    'grandmaster': ('#9B7BC4', '#AE8ED5'),
-    'aaron': ('#B84444', '#CC5858'),
+    'rean': ('#4A423B', '#5A514A'),      # Darker warm brown (PROMINENT)
+    'van': ('#1E3A5F', '#2D4A6E'),        # Deeper rich blue (PROMINENT)
+    'kevin': ('#2E7D32', '#4A7E2D'),      # More saturated green (PROMINENT)
+    'emilia': ('#F57F17', '#F9A825'),     # Vibrant amber/gold
+    'agnes': ('#AD1457', '#C2185B'),      # Rich magenta
+    'grandmaster': ('#6A1B9A', '#7B1FA2'), # Richer purple
+    'aaron': ('#C62828', '#D32F2F'),      # Vibrant red
 }
 
-# Darker base for shading
+# Darker base for shading (adjusted for light theme)
 DARK_BASE = {
-    'rean': '#1a1815',
-    'van': '#101820',
-    'kevin': '#152010',
-    'emilia': '#201c10',
-    'agnes': '#1a1018',
-    'grandmaster': '#181028',
-    'aaron': '#201010',
+    'rean': '#2A2220',
+    'van': '#0D1F33',
+    'kevin': '#1B5E20',
+    'emilia': '#E65100',
+    'agnes': '#880E4F',
+    'grandmaster': '#4A148C',
+    'aaron': '#B71C1C',
 }
 
 # Braille base character
 BRAILLE_BASE = 0x2800
 
-# Background color from Horizon theme (bg0)
-BG_COLOR = (19, 23, 29)  # #13171d
+# Background color from Horizon light theme (bg0 - warm beige from Kai art)
+BG_COLOR = (216, 212, 208)  # #D8D4D0
 
 def hex_to_rgb(hex_color):
     """Convert hex to RGB tuple"""
@@ -68,13 +68,13 @@ def lerp_color(color1, color2, t):
         int(b1 + (b2 - b1) * t)
     )
 
-def image_to_braille(image_path, width=30, height=15, character='van'):
-    """Convert image to colored braille dot matrix with density variation"""
+def image_to_halfblock(image_path, width=30, height=30, character='van'):
+    """Convert image to colored half-block characters for light theme visibility"""
     img = Image.open(image_path).convert('RGBA')
 
-    # Braille is 2x4 dots per character
-    pixel_width = width * 2
-    pixel_height = height * 4
+    # Half-block: each character represents 2 vertical pixels
+    pixel_width = width
+    pixel_height = height * 2
     img = img.resize((pixel_width, pixel_height), Image.Resampling.LANCZOS)
 
     # Get palette colors
@@ -83,93 +83,68 @@ def image_to_braille(image_path, width=30, height=15, character='van'):
     bright_color = hex_to_rgb(PALETTES[character][1])
 
     result = []
-    bg_ansi = rgb_to_ansi_bg_only()
 
-    # Braille dot positions (column-major order):
-    # 0 3
-    # 1 4
-    # 2 5
-    # 6 7
-    dot_map = [
-        (0, 0, 0x01), (0, 1, 0x02), (0, 2, 0x04), (0, 3, 0x40),
-        (1, 0, 0x08), (1, 1, 0x10), (1, 2, 0x20), (1, 3, 0x80)
-    ]
+    # Half-block characters
+    UPPER_HALF = '▀'  # Upper half block
+    LOWER_HALF = '▄'  # Lower half block
+    FULL_BLOCK = '█'  # Full block
 
     for by in range(height):
         line = ''
         for bx in range(width):
-            px, py = bx * 2, by * 4
+            # Get top and bottom pixels for this character cell
+            top_y = by * 2
+            bot_y = by * 2 + 1
 
-            # Collect brightness values for each dot position
-            dot_brightness = []
-            total_brightness = 0
-            visible = 0
+            # Get pixel data
+            top_r, top_g, top_b, top_a = img.getpixel((bx, top_y))
+            bot_r, bot_g, bot_b, bot_a = img.getpixel((bx, bot_y)) if bot_y < pixel_height else (0, 0, 0, 0)
 
-            for dx, dy, bit in dot_map:
-                x, y = px + dx, py + dy
-                if x < pixel_width and y < pixel_height:
-                    r, g, b, a = img.getpixel((x, y))
-                    if a > 30:
-                        brightness = (r + g + b) / (255 * 3)
-                        dot_brightness.append((bit, brightness))
-                        total_brightness += brightness
-                        visible += 1
-                    else:
-                        dot_brightness.append((bit, 0))
-                else:
-                    dot_brightness.append((bit, 0))
+            top_visible = top_a > 30
+            bot_visible = bot_a > 30
 
-            if visible == 0:
-                line += bg_ansi + ' '
+            if not top_visible and not bot_visible:
+                # Both transparent - show background
+                line += f'\033[48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m '
                 continue
 
-            avg_brightness = total_brightness / visible
+            # Calculate brightness for color mapping
+            top_brightness = (top_r + top_g + top_b) / (255 * 3) if top_visible else 0
+            bot_brightness = (bot_r + bot_g + bot_b) / (255 * 3) if bot_visible else 0
 
-            # Skip very dark cells
-            if avg_brightness < 0.15:
-                line += bg_ansi + ' '
-                continue
-
-            # Determine how many dots to show based on average brightness
-            if avg_brightness < 0.25:
-                num_dots = 1
-            elif avg_brightness < 0.35:
-                num_dots = 2
-            elif avg_brightness < 0.45:
-                num_dots = 3
-            elif avg_brightness < 0.55:
-                num_dots = 4
-            elif avg_brightness < 0.65:
-                num_dots = 5
-            elif avg_brightness < 0.75:
-                num_dots = 6
-            elif avg_brightness < 0.85:
-                num_dots = 7
-            else:
-                num_dots = 8
-
-            # Sort dots by brightness and pick the brightest ones
-            dot_brightness.sort(key=lambda x: x[1], reverse=True)
-
-            dots = 0
-            for i, (bit, br) in enumerate(dot_brightness):
-                if i < num_dots and br > 0.1:
-                    dots |= bit
-
-            if dots == 0:
-                line += bg_ansi + ' '
-            else:
-                # Color based on brightness
-                if avg_brightness < 0.4:
-                    color = lerp_color(dark_color, main_color, avg_brightness / 0.4)
+            def get_color(brightness):
+                """Map brightness to character palette color"""
+                if brightness < 0.3:
+                    return lerp_color(dark_color, main_color, brightness / 0.3)
                 else:
-                    color = lerp_color(main_color, bright_color, (avg_brightness - 0.4) / 0.6)
+                    return lerp_color(main_color, bright_color, (brightness - 0.3) / 0.7)
 
-                line += rgb_to_ansi(*color) + chr(BRAILLE_BASE + dots)
+            if top_visible and bot_visible:
+                # Both pixels visible
+                top_color = get_color(top_brightness)
+                bot_color = get_color(bot_brightness)
+
+                # Use upper half block with foreground=top, background=bottom
+                line += f'\033[38;2;{top_color[0]};{top_color[1]};{top_color[2]};48;2;{bot_color[0]};{bot_color[1]};{bot_color[2]}m{UPPER_HALF}'
+
+            elif top_visible:
+                # Only top pixel visible
+                top_color = get_color(top_brightness)
+                line += f'\033[38;2;{top_color[0]};{top_color[1]};{top_color[2]};48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m{UPPER_HALF}'
+
+            else:
+                # Only bottom pixel visible
+                bot_color = get_color(bot_brightness)
+                line += f'\033[38;2;{bot_color[0]};{bot_color[1]};{bot_color[2]};48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m{LOWER_HALF}'
 
         result.append(line + '\033[0m')
 
     return result
+
+
+def image_to_braille(image_path, width=30, height=15, character='van'):
+    """Wrapper that calls half-block version for light theme"""
+    return image_to_halfblock(image_path, width, height, character)
 
 def get_visible_chars(line):
     """Extract visible characters from a line with ANSI codes, preserving codes"""
@@ -307,9 +282,9 @@ def main():
     bg_ansi = rgb_to_ansi_bg_only()
     print(bg_ansi + '\033[2J\033[H')  # Clear screen with background
 
-    # Simple header
-    VAN = '\033[38;2;80;128;192m'
-    FG4 = '\033[38;2;107;120;136m'
+    # Simple header (colors for light theme)
+    VAN = '\033[38;2;30;58;95m'      # #1E3A5F - deeper blue for light bg
+    FG4 = '\033[38;2;90;88;86m'      # #5A5856 - darker gray for light bg
     RESET = '\033[0m'
 
     print(bg_ansi + VAN + '  Horizon Theme' + FG4 + ' - Character Gallery' + RESET)

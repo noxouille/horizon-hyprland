@@ -1,8 +1,8 @@
 {
   "name": "horizon-theme",
-  "displayName": "horizon",
+  "displayName": "Horizon",
   "publisher": "horizon",
-  "description": "Dark theme inspired by Kuro no Kiseki / Trails through Daybreak",
+  "description": "Light theme inspired by Kai no Kiseki / Trails beyond the Horizon",
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.80.0"
@@ -11,8 +11,8 @@
   "contributes": {
     "themes": [
       {
-        "label": "horizon",
-        "uiTheme": "vs-dark",
+        "label": "Horizon",
+        "uiTheme": "vs-light",
         "path": "./horizon-color-theme.json"
       }
     ]

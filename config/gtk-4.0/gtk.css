@@ -1,59 +1,63 @@
 /* ============================================================================
- * horizon - GTK4 Config Override
+ * horizon - GTK4 Config Override (Light Theme)
  * ============================================================================
  * Place in ~/.config/gtk-4.0/gtk.css for libadwaita apps
  * ============================================================================ */
 
-@define-color accent_color #3D5A80;
-@define-color accent_bg_color #3D5A80;
-@define-color accent_fg_color #2D2A26;
+@define-color accent_color #1E3A5F;
+@define-color accent_bg_color #1E3A5F;
+@define-color accent_fg_color #FFFFFF;
 
-@define-color destructive_color #B84444;
-@define-color destructive_bg_color #B84444;
-@define-color destructive_fg_color #2D2A26;
+@define-color destructive_color #C62828;
+@define-color destructive_bg_color #C62828;
+@define-color destructive_fg_color #FFFFFF;
 
-@define-color success_color #52B5A4;
-@define-color success_bg_color #52B5A4;
-@define-color success_fg_color #2D2A26;
+@define-color success_color #2E7D32;
+@define-color success_bg_color #2E7D32;
+@define-color success_fg_color #FFFFFF;
 
-@define-color warning_color #F8BA65;
-@define-color warning_bg_color #F8BA65;
-@define-color warning_fg_color #FDFBF7;
+@define-color warning_color #E65100;
+@define-color warning_bg_color #E65100;
+@define-color warning_fg_color #FFFFFF;
 
-@define-color error_color #B84444;
-@define-color error_bg_color #B84444;
-@define-color error_fg_color #2D2A26;
+@define-color error_color #C62828;
+@define-color error_bg_color #C62828;
+@define-color error_fg_color #FFFFFF;
 
-@define-color window_bg_color #F0EBE3;
-@define-color window_fg_color #524D47;
+@define-color window_bg_color #D8D4D0;
+@define-color window_fg_color #3A3836;
 
-@define-color view_bg_color #F7F4EE;
-@define-color view_fg_color #524D47;
+@define-color view_bg_color #CEC9C5;
+@define-color view_fg_color #3A3836;
 
-@define-color headerbar_bg_color #F0EBE3;
-@define-color headerbar_fg_color #524D47;
-@define-color headerbar_border_color #C7BFB2;
-@define-color headerbar_backdrop_color #F7F4EE;
-@define-color headerbar_shade_color rgba(0, 0, 0, 0.36);
+@define-color headerbar_bg_color #D8D4D0;
+@define-color headerbar_fg_color #3A3836;
+@define-color headerbar_border_color #A8A29D;
+@define-color headerbar_backdrop_color #CEC9C5;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.12);
 
-@define-color sidebar_bg_color #F7F4EE;
-@define-color sidebar_fg_color #524D47;
-@define-color sidebar_backdrop_color #FDFBF7;
-@define-color sidebar_shade_color rgba(0, 0, 0, 0.25);
+@define-color sidebar_bg_color #CEC9C5;
+@define-color sidebar_fg_color #3A3836;
+@define-color sidebar_backdrop_color #D8D4D0;
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.07);
 
-@define-color card_bg_color #E6E0D6;
-@define-color card_fg_color #524D47;
-@define-color card_shade_color rgba(0, 0, 0, 0.36);
+@define-color card_bg_color #C4BFBA;
+@define-color card_fg_color #3A3836;
+@define-color card_shade_color rgba(0, 0, 0, 0.12);
 
-@define-color dialog_bg_color #E6E0D6;
-@define-color dialog_fg_color #524D47;
+@define-color dialog_bg_color #C4BFBA;
+@define-color dialog_fg_color #3A3836;
 
-@define-color popover_bg_color #E6E0D6;
-@define-color popover_fg_color #524D47;
-@define-color popover_shade_color rgba(0, 0, 0, 0.25);
+@define-color popover_bg_color #C4BFBA;
+@define-color popover_fg_color #3A3836;
+@define-color popover_shade_color rgba(0, 0, 0, 0.07);
 
-@define-color shade_color rgba(0, 0, 0, 0.36);
-@define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+@define-color shade_color rgba(0, 0, 0, 0.12);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.15);
+
+/* Selection colors - ensure proper contrast */
+@define-color selected_bg_color #1E3A5F;
+@define-color selected_fg_color #D8D4D0;
 
 /* Window Controls - macOS style */
 windowcontrols > button:not(.suggested-action):not(.destructive-action) {
@@ -101,5 +105,33 @@ windowcontrols > button.maximize:hover:not(.suggested-action):not(.destructive-a
 }
 
 windowcontrols > button:backdrop:not(.suggested-action):not(.destructive-action) > image {
-    background-color: #C7BFB2;
+    background-color: #A8A29D;
+}
+
+/* Selection styling for file managers and lists */
+.view:selected,
+treeview.view:selected,
+iconview:selected,
+flowboxchild:selected,
+row:selected,
+.sidebar row:selected,
+list row:selected {
+    background-color: #1E3A5F;
+    color: #D8D4D0;
+}
+
+row:selected:hover,
+list row:selected:hover,
+.sidebar row:selected:hover {
+    background-color: #2D4A6E;
+    color: #D8D4D0;
+}
+
+/* Text selection */
+selection,
+text selection,
+entry selection,
+textview text selection {
+    background-color: #1E3A5F;
+    color: #D8D4D0;
 }

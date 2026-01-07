@@ -1,12 +1,12 @@
 [Desktop Entry]
 Type=X-GNOME-Metatheme
-Name=horizon
-Comment=Dark theme inspired by Kuro no Kiseki / Trails through Daybreak
+Name=Horizon
+Comment=Light theme inspired by Kai no Kiseki / Trails beyond the Horizon
 Encoding=UTF-8
 
 [X-GNOME-Metatheme]
-GtkTheme=horizon
-MetacityTheme=horizon
+GtkTheme=Horizon
+MetacityTheme=Horizon
 IconTheme=Adwaita
 CursorTheme=default
 ButtonLayout=close,minimize,maximize:appmenu
