@@ -19,6 +19,11 @@ function M.setup(opts)
 
     local highlights = require("horizon.highlights")
     highlights.setup(M.colors)
+
+    -- Force override plugin highlights that use links
+    vim.schedule(function()
+        highlights.setup(M.colors)
+    end)
 end
 
 M.lualine = require("horizon.lualine").theme
