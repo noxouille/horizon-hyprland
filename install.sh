@@ -40,11 +40,7 @@ install_colorscheme() {
   # Make scripts executable
   chmod +x ~/.config/colorschemes/${THEME_NAME}/scripts/*.sh 2>/dev/null || true
 
-  # Create fastfetch logo symlink
-  ln -sf ~/.config/colorschemes/${THEME_NAME}/logo.png ~/.config/fastfetch/logo.png
-
   success "Colorscheme installed to ~/.config/colorschemes/${THEME_NAME}/"
-  success "Fastfetch logo symlinked to ~/.config/fastfetch/logo.png"
   echo ""
   info "Link or source files from ~/.config/colorschemes/${THEME_NAME}/"
   echo ""
