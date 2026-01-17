@@ -1,0 +1,70 @@
+/* Swaync Colors - Horizon Theme (Light)
+ * Character-based color system from Kai no Kiseki / Trails beyond Horizon
+ */
+
+/* === BASE PALETTE === */
+@define-color background #D8D4D0;
+@define-color surface #D8D4D0;
+@define-color surface_bright #E4E0DC;
+@define-color surface_dim #CEC9C5;
+@define-color surface_container #C4BFBA;
+@define-color surface_container_low #CEC9C5;
+@define-color surface_container_lowest #D8D4D0;
+@define-color surface_container_high #BAB4AF;
+@define-color surface_container_highest #A8A29D;
+@define-color surface_variant #C4BFBA;
+@define-color surface_tint #1E3A5F;
+
+@define-color on_background #3A3836;
+@define-color on_surface #3A3836;
+@define-color on_surface_variant #5A5856;
+@define-color outline #6A6866;
+@define-color outline_variant #A8A29D;
+@define-color scrim rgba(0, 0, 0, 0.32);
+@define-color shadow rgba(0, 0, 0, 0.12);
+
+/* === CHARACTER COLORS === */
+@define-color van #1E3A5F;          /* Primary - Van Arkride (deep steel blue) */
+@define-color kevin #2E7D32;        /* Success/Strings - Kevin Graham (saturated green) */
+@define-color rean #4A423B;         /* Tertiary - Rean Schwarzer (dark warm brown) */
+@define-color agnes #AD1457;        /* Keywords - Agnès Claudel (rich magenta) */
+@define-color emilia #704700;       /* Constants - Emilia (dark amber) */
+@define-color grandmaster #6A1B9A;  /* Decorators - Grandmaster (rich purple) */
+@define-color laegjarn #005A4F;     /* Types/Info - Laegjarn's Chest (dark teal) */
+@define-color horizon #BF4400;      /* Warnings - Horizon (dark burnt orange) */
+@define-color aaron #C62828;        /* Errors - Aaron Wei (vibrant red) */
+
+/* === SEMANTIC MAPPING === */
+@define-color primary @van;
+@define-color primary_container #2D4A6E;
+@define-color on_primary #FFFFFF;
+@define-color on_primary_container #FFFFFF;
+
+@define-color secondary @kevin;
+@define-color secondary_container #4A7E2D;
+@define-color on_secondary #FFFFFF;
+@define-color on_secondary_container #FFFFFF;
+
+@define-color tertiary @rean;
+@define-color tertiary_container #5A514A;
+@define-color on_tertiary #FFFFFF;
+@define-color on_tertiary_container #FFFFFF;
+
+@define-color error @aaron;
+@define-color error_container #D32F2F;
+@define-color on_error #FFFFFF;
+@define-color on_error_container #FFFFFF;
+
+@define-color success @kevin;
+@define-color on_success #FFFFFF;
+@define-color success_container #4A7E2D;
+@define-color on_success_container #FFFFFF;
+
+@define-color warning @horizon;
+@define-color on_warning #FFFFFF;
+@define-color info @laegjarn;
+@define-color on_info #FFFFFF;
+
+@define-color inverse_surface #3A3836;
+@define-color inverse_on_surface #D8D4D0;
+@define-color inverse_primary #5080C0;
