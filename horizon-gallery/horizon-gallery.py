@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Horizon Character Dot Matrix Display
-Converts character images to colored ASCII art using their theme colors
+Converts character images to colored braille art using their theme colors
 
 Usage: python horizon-gallery.py [portrait|side]
-  portrait - Full portrait images (7 characters, row of 3 + row of 4)
-  side     - Side profile images (7 characters, row of 3 + row of 4)
+  portrait - Full portrait images (3 characters: Rean, Van, Kevin)
+  side     - Side profile images (3 characters)
 
 Arch Linux: sudo pacman -S python-pillow
 """
@@ -15,48 +15,52 @@ import sys
 import os
 import time
 
-# Character color palettes (main color, accent) - enhanced for light theme contrast
+# Character color palettes - MORE SATURATED for light theme visibility
 PALETTES = {
-    'rean': ('#4A423B', '#5A514A'),      # Darker warm brown (PROMINENT)
-    'van': ('#1E3A5F', '#2D4A6E'),        # Deeper rich blue (PROMINENT)
-    'kevin': ('#2E7D32', '#4A7E2D'),      # More saturated green (PROMINENT)
-    'emilia': ('#F57F17', '#F9A825'),     # Vibrant amber/gold
-    'agnes': ('#AD1457', '#C2185B'),      # Rich magenta
-    'grandmaster': ('#6A1B9A', '#7B1FA2'), # Richer purple
-    'aaron': ('#C62828', '#D32F2F'),      # Vibrant red
+    'rean': ('#5C4033', '#8B6914'),      # Rich brown / bronze
+    'van': ('#0A4D8C', '#1565C0'),        # Bold blue
+    'kevin': ('#1B6B1B', '#2E8B2E'),      # Rich forest green
+    'emilia': ('#E65100', '#FF8F00'),     # Bold orange/amber
+    'agnes': ('#AD1457', '#D81B60'),      # Hot pink/magenta
+    'grandmaster': ('#6A1B9A', '#8E24AA'), # Bold purple
+    'aaron': ('#B71C1C', '#E53935'),      # Bold red
 }
 
-# Darker base for shading (adjusted for light theme)
+# Darker base for shading - even darker for contrast
 DARK_BASE = {
-    'rean': '#2A2220',
-    'van': '#0D1F33',
-    'kevin': '#1B5E20',
-    'emilia': '#E65100',
-    'agnes': '#880E4F',
-    'grandmaster': '#4A148C',
-    'aaron': '#B71C1C',
+    'rean': '#2E1F1A',
+    'van': '#051E3E',
+    'kevin': '#0D3D0D',
+    'emilia': '#7A2900',
+    'agnes': '#5C0A2F',
+    'grandmaster': '#3A0A5C',
+    'aaron': '#6B0F0F',
 }
 
 # Braille base character
 BRAILLE_BASE = 0x2800
 
-# Background color from Horizon light theme (bg0 - warm beige from Kai art)
+# Background color from Horizon light theme (bg0 - warm beige)
 BG_COLOR = (216, 212, 208)  # #D8D4D0
+
 
 def hex_to_rgb(hex_color):
     """Convert hex to RGB tuple"""
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
+
 def rgb_to_ansi(r, g, b):
     """Convert RGB to ANSI escape code with background"""
     bg_r, bg_g, bg_b = BG_COLOR
     return f'\033[38;2;{r};{g};{b};48;2;{bg_r};{bg_g};{bg_b}m'
 
+
 def rgb_to_ansi_bg_only():
     """Return ANSI code for background only (for spaces)"""
     bg_r, bg_g, bg_b = BG_COLOR
     return f'\033[48;2;{bg_r};{bg_g};{bg_b}m'
+
 
 def lerp_color(color1, color2, t):
     """Linear interpolation between two RGB colors"""
@@ -68,13 +72,20 @@ def lerp_color(color1, color2, t):
         int(b1 + (b2 - b1) * t)
     )
 
-def image_to_halfblock(image_path, width=30, height=30, character='van'):
-    """Convert image to colored half-block characters for light theme visibility"""
+
+def image_to_braille(image_path, width=30, height=15, character='van', upper_crop=1.0):
+    """Convert image to colored braille dot matrix with density variation"""
     img = Image.open(image_path).convert('RGBA')
 
-    # Half-block: each character represents 2 vertical pixels
-    pixel_width = width
-    pixel_height = height * 2
+    # Crop to upper portion if specified
+    if upper_crop < 1.0:
+        orig_width, orig_height = img.size
+        crop_height = int(orig_height * upper_crop)
+        img = img.crop((0, 0, orig_width, crop_height))
+
+    # Braille is 2x4 dots per character
+    pixel_width = width * 2
+    pixel_height = height * 4
     img = img.resize((pixel_width, pixel_height), Image.Resampling.LANCZOS)
 
     # Get palette colors
@@ -83,72 +94,102 @@ def image_to_halfblock(image_path, width=30, height=30, character='van'):
     bright_color = hex_to_rgb(PALETTES[character][1])
 
     result = []
+    bg_ansi = rgb_to_ansi_bg_only()
 
-    # Half-block characters
-    UPPER_HALF = '▀'  # Upper half block
-    LOWER_HALF = '▄'  # Lower half block
-    FULL_BLOCK = '█'  # Full block
+    # Braille dot positions (column-major order):
+    # 0 3
+    # 1 4
+    # 2 5
+    # 6 7
+    dot_map = [
+        (0, 0, 0x01), (0, 1, 0x02), (0, 2, 0x04), (0, 3, 0x40),
+        (1, 0, 0x08), (1, 1, 0x10), (1, 2, 0x20), (1, 3, 0x80)
+    ]
 
     for by in range(height):
         line = ''
         for bx in range(width):
-            # Get top and bottom pixels for this character cell
-            top_y = by * 2
-            bot_y = by * 2 + 1
+            px, py = bx * 2, by * 4
 
-            # Get pixel data
-            top_r, top_g, top_b, top_a = img.getpixel((bx, top_y))
-            bot_r, bot_g, bot_b, bot_a = img.getpixel((bx, bot_y)) if bot_y < pixel_height else (0, 0, 0, 0)
+            # Collect brightness values for each dot position
+            dot_brightness = []
+            total_brightness = 0
+            visible = 0
 
-            top_visible = top_a > 30
-            bot_visible = bot_a > 30
+            for dx, dy, bit in dot_map:
+                x, y = px + dx, py + dy
+                if x < pixel_width and y < pixel_height:
+                    r, g, b, a = img.getpixel((x, y))
+                    if a > 30:
+                        brightness = (r + g + b) / (255 * 3)
+                        dot_brightness.append((bit, brightness))
+                        total_brightness += brightness
+                        visible += 1
+                    else:
+                        dot_brightness.append((bit, 0))
+                else:
+                    dot_brightness.append((bit, 0))
 
-            if not top_visible and not bot_visible:
-                # Both transparent - show background
-                line += f'\033[48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m '
+            if visible == 0:
+                line += bg_ansi + ' '
                 continue
 
-            # Calculate brightness for color mapping
-            top_brightness = (top_r + top_g + top_b) / (255 * 3) if top_visible else 0
-            bot_brightness = (bot_r + bot_g + bot_b) / (255 * 3) if bot_visible else 0
+            avg_brightness = total_brightness / visible
 
-            def get_color(brightness):
-                """Map brightness to character palette color"""
-                if brightness < 0.3:
-                    return lerp_color(dark_color, main_color, brightness / 0.3)
-                else:
-                    return lerp_color(main_color, bright_color, (brightness - 0.3) / 0.7)
+            # For light theme, we want to show darker areas more prominently
+            # Invert the logic - darker pixels = more dots
+            darkness = 1.0 - avg_brightness
 
-            if top_visible and bot_visible:
-                # Both pixels visible
-                top_color = get_color(top_brightness)
-                bot_color = get_color(bot_brightness)
+            # Skip very light cells (they blend with background)
+            if darkness < 0.10:
+                line += bg_ansi + ' '
+                continue
 
-                # Use upper half block with foreground=top, background=bottom
-                line += f'\033[38;2;{top_color[0]};{top_color[1]};{top_color[2]};48;2;{bot_color[0]};{bot_color[1]};{bot_color[2]}m{UPPER_HALF}'
-
-            elif top_visible:
-                # Only top pixel visible
-                top_color = get_color(top_brightness)
-                line += f'\033[38;2;{top_color[0]};{top_color[1]};{top_color[2]};48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m{UPPER_HALF}'
-
+            # Determine how many dots to show based on darkness
+            if darkness < 0.15:
+                num_dots = 1
+            elif darkness < 0.25:
+                num_dots = 2
+            elif darkness < 0.35:
+                num_dots = 3
+            elif darkness < 0.45:
+                num_dots = 4
+            elif darkness < 0.55:
+                num_dots = 5
+            elif darkness < 0.65:
+                num_dots = 6
+            elif darkness < 0.75:
+                num_dots = 7
             else:
-                # Only bottom pixel visible
-                bot_color = get_color(bot_brightness)
-                line += f'\033[38;2;{bot_color[0]};{bot_color[1]};{bot_color[2]};48;2;{BG_COLOR[0]};{BG_COLOR[1]};{BG_COLOR[2]}m{LOWER_HALF}'
+                num_dots = 8
+
+            # Sort dots by darkness (1-brightness) and pick the darkest ones
+            dot_brightness.sort(key=lambda x: (1.0 - x[1]) if x[1] > 0 else 0, reverse=True)
+
+            dots = 0
+            for i, (bit, br) in enumerate(dot_brightness):
+                if i < num_dots and br > 0:
+                    dots |= bit
+
+            if dots == 0:
+                line += bg_ansi + ' '
+            else:
+                # Color based on darkness level - darker = richer color
+                if darkness < 0.4:
+                    color = lerp_color(bright_color, main_color, darkness / 0.4)
+                else:
+                    color = lerp_color(main_color, dark_color, (darkness - 0.4) / 0.6)
+
+                line += rgb_to_ansi(*color) + chr(BRAILLE_BASE + dots)
 
         result.append(line + '\033[0m')
 
     return result
 
 
-def image_to_braille(image_path, width=30, height=15, character='van'):
-    """Wrapper that calls half-block version for light theme"""
-    return image_to_halfblock(image_path, width, height, character)
-
 def get_visible_chars(line):
     """Extract visible characters from a line with ANSI codes, preserving codes"""
-    chars = []  # List of (ansi_prefix, char) tuples
+    chars = []
     current_ansi = ''
     in_escape = False
     escape_seq = ''
@@ -168,8 +209,9 @@ def get_visible_chars(line):
 
     return chars
 
-def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, delay=0.008):
-    """Print multiple ASCII arts side by side with optional character-by-character animation"""
+
+def print_side_by_side(arts, names, char_width=24, spacing=2, animate=True, delay=0.008):
+    """Print multiple ASCII arts side by side with optional animation"""
     if not arts:
         return
 
@@ -182,7 +224,6 @@ def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, dela
         line_parts = []
         for i, art in enumerate(arts):
             art_line = art[row] if row < len(art) else ''
-            # Calculate visible length (without ANSI codes)
             visible_len = 0
             in_escape = False
             for c in art_line:
@@ -192,7 +233,6 @@ def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, dela
                     in_escape = False
                 elif not in_escape:
                     visible_len += 1
-            # Pad to width
             padding = char_width - visible_len
             line_parts.append(art_line + bg_ansi + ' ' * max(0, padding))
         all_lines.append(bg_ansi + (' ' * spacing).join(line_parts) + '\033[0m')
@@ -213,29 +253,22 @@ def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, dela
         return
 
     # Animate character by character
-    # First, parse all lines into visible characters
     parsed_lines = [get_visible_chars(line) for line in all_lines]
     parsed_name = get_visible_chars(name_line)
 
-    # Find max width
     max_width = max(len(chars) for chars in parsed_lines) if parsed_lines else 0
     max_width = max(max_width, len(parsed_name))
 
-    # Print empty lines first to reserve space
-    num_lines = len(all_lines) + 1  # +1 for name line
+    num_lines = len(all_lines) + 1
     for _ in range(num_lines):
         print(bg_ansi + ' ' * max_width + '\033[0m')
 
-    # Move cursor back up to start of our block
     print(f'\033[{num_lines}A', end='', flush=True)
 
-    # Reveal column by column
     for col in range(max_width):
-        # Save cursor position at start of block
         print('\033[s', end='')
 
         for row, chars in enumerate(parsed_lines):
-            # Move to start of line, print content up to col
             print('\r', end='')
             output = bg_ansi
             for i in range(col + 1):
@@ -243,11 +276,9 @@ def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, dela
                     ansi, char = chars[i]
                     output += ansi + char
             print(output + '\033[0m', end='')
-            # Move down one line
             if row < len(parsed_lines) - 1:
                 print('\033[1B', end='')
 
-        # Name line (move down and print)
         print('\033[1B\r', end='')
         output = bg_ansi
         for i in range(col + 1):
@@ -256,17 +287,70 @@ def print_side_by_side(arts, names, char_width=24, spacing=0, animate=True, dela
                 output += ansi + char
         print(output + '\033[0m', end='', flush=True)
 
-        # Restore cursor to top of block for next iteration
         print('\033[u', end='', flush=True)
-
         time.sleep(delay)
 
-    # Move cursor below the content
     print(f'\033[{num_lines}B', end='')
 
+
+def print_vertical(art, name, char_width, animate=True, delay=0.005):
+    """Print a single character art with name, optionally animated"""
+    bg_ansi = rgb_to_ansi_bg_only()
+
+    # Build name line
+    color = hex_to_rgb(PALETTES[name][0])
+    ansi = rgb_to_ansi(*color)
+    name_line = bg_ansi + ansi + name.upper().center(char_width) + '\033[0m'
+
+    if not animate:
+        for line in art:
+            print(line)
+        print(name_line)
+        return
+
+    # Animate
+    parsed_lines = [get_visible_chars(line) for line in art]
+    parsed_name = get_visible_chars(name_line)
+
+    max_width = max(len(chars) for chars in parsed_lines) if parsed_lines else 0
+    max_width = max(max_width, len(parsed_name))
+
+    num_lines = len(art) + 1
+    for _ in range(num_lines):
+        print(bg_ansi + ' ' * max_width + '\033[0m')
+
+    print(f'\033[{num_lines}A', end='', flush=True)
+
+    for col in range(max_width):
+        print('\033[s', end='')
+
+        for row, chars in enumerate(parsed_lines):
+            print('\r', end='')
+            output = bg_ansi
+            for i in range(col + 1):
+                if i < len(chars):
+                    ansi_code, char = chars[i]
+                    output += ansi_code + char
+            print(output + '\033[0m', end='')
+            if row < len(parsed_lines) - 1:
+                print('\033[1B', end='')
+
+        print('\033[1B\r', end='')
+        output = bg_ansi
+        for i in range(col + 1):
+            if i < len(parsed_name):
+                ansi_code, char = parsed_name[i]
+                output += ansi_code + char
+        print(output + '\033[0m', end='', flush=True)
+
+        print('\033[u', end='', flush=True)
+        time.sleep(delay)
+
+    print(f'\033[{num_lines}B', end='')
+
+
 def main():
-    # Parse command line argument
-    mode = 'portrait'  # default
+    mode = 'portrait'
     if len(sys.argv) > 1:
         arg = sys.argv[1].lower()
         if arg in ('portrait', 'side'):
@@ -275,75 +359,56 @@ def main():
             print(f"Usage: {sys.argv[0]} [portrait|side]")
             sys.exit(1)
 
-    # Get script directory for relative paths
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Set background color (bg0 from Horizon theme: #13171d)
     bg_ansi = rgb_to_ansi_bg_only()
-    print(bg_ansi + '\033[2J\033[H')  # Clear screen with background
+    print(bg_ansi + '\033[2J\033[H')
 
-    # Simple header (colors for light theme)
-    VAN = '\033[38;2;30;58;95m'      # #1E3A5F - deeper blue for light bg
-    FG4 = '\033[38;2;90;88;86m'      # #5A5856 - darker gray for light bg
+    # Header
+    VAN = '\033[38;2;30;58;95m'
+    FG4 = '\033[38;2;90;88;86m'
     RESET = '\033[0m'
 
     print(bg_ansi + VAN + '  Horizon Theme' + FG4 + ' - Character Gallery' + RESET)
     print(bg_ansi)
 
     if mode == 'portrait':
-        # Portrait mode: 7 characters in 1 row
+        # 3 protagonists stacked vertically, wider for recognizability
         characters = [
             ('rean', 'portrait/rean.webp'),
             ('van', 'portrait/van.webp'),
             ('kevin', 'portrait/kevin.webp'),
-            ('emilia', 'portrait/emilia.webp'),
-            ('agnes', 'portrait/agnes.webp'),
-            ('grandmaster', 'portrait/grandmaster.webp'),
-            ('aaron', 'portrait/aaron.webp'),
         ]
-        CHAR_WIDTH = 26
-        CHAR_HEIGHT = 26
-        rows = [(0, 7)]
+        CHAR_WIDTH = 60
+        CHAR_HEIGHT = 12  # Compact to fit 3 in window without scrolling
+        UPPER_CROP = 0.50  # Face focus (top 50%)
     else:
-        # Side mode: 7 characters in 1 row
         characters = [
-            ('rean', 'side/rean.webp'),
             ('van', 'side/van.webp'),
-            ('kevin', 'side/kevin.webp'),
-            ('emilia', 'side/emilia.webp'),
             ('agnes', 'side/agnes.webp'),
-            ('grandmaster', 'side/grandmaster.webp'),
             ('aaron', 'side/aaron.webp'),
         ]
-        CHAR_WIDTH = 26
-        CHAR_HEIGHT = 26
-        rows = [(0, 7)]
+        CHAR_WIDTH = 60
+        CHAR_HEIGHT = 8
+        UPPER_CROP = 0.60
 
-    # Convert all images
-    arts = []
-    names = []
-    for name, path in characters:
-        try:
-            full_path = os.path.join(script_dir, path)
-            art = image_to_braille(full_path, width=CHAR_WIDTH, height=CHAR_HEIGHT, character=name)
-            arts.append(art)
-            names.append(name)
-        except Exception as e:
-            print(f"Error processing {name}: {e}")
-
-    # Hide cursor during animation
     print('\033[?25l', end='')
 
     try:
-        # Print in rows with animation
-        for start, end in rows:
-            print_side_by_side(arts[start:end], names[start:end], CHAR_WIDTH, animate=True, delay=0.006)
-            print(bg_ansi + '\033[0m')
+        for name, path in characters:
+            try:
+                full_path = os.path.join(script_dir, path)
+                art = image_to_braille(full_path, width=CHAR_WIDTH, height=CHAR_HEIGHT,
+                                       character=name, upper_crop=UPPER_CROP)
+                print_vertical(art, name, CHAR_WIDTH, animate=True, delay=0.003)
+                print(bg_ansi)
+            except Exception as e:
+                print(f"Error processing {name}: {e}")
     finally:
-        # Show cursor again
         print('\033[?25h', end='')
 
-    print('\033[0m')  # Reset terminal at end
+    print('\033[0m')
+
 
 if __name__ == '__main__':
     main()

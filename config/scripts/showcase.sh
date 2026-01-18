@@ -9,6 +9,12 @@ GALLERY_DIR="$HOME/.local/share/horizon-gallery"
 # 1. Start music immediately (if configured)
 "$SCRIPT_DIR/toggle-music.sh"
 
+# 1b. Open notification panel briefly to show music notification
+sleep 1
+swaync-client --open-panel
+sleep 3
+swaync-client --close-panel
+
 # 2. Delay 5s, switch to workspace 1 and open gallery (left) + typing demo (right)
 sleep 5
 hyprctl dispatch workspace 1
