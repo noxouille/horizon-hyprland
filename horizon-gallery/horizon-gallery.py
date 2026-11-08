@@ -41,7 +41,7 @@ DARK_BASE = {
 BRAILLE_BASE = 0x2800
 
 # Background color from Horizon light theme (bg0 - warm beige)
-BG_COLOR = (216, 212, 208)  # #D8D4D0
+BG_COLOR = (205, 201, 194)  # #CDC9C2
 
 
 def hex_to_rgb(hex_color):

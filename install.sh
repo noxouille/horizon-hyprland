@@ -8,7 +8,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 THEME_NAME="horizon"
-GTK_THEME_NAME="Horizon-BL-MB-Dark"
+GTK_THEME_NAME="Horizon-BL-MB-Light"
 
 echo "╔══════════════════════════════════════════════════════════════════╗"
 echo "║              Horizon Hyprland Theme - Installation               ║"
@@ -59,7 +59,7 @@ install_colorscheme() {
 }
 
 # ============================================================================
-# GTK Theme → ~/.themes/horizon-BL-MB-Dark/
+# GTK Theme → ~/.themes/horizon-BL-MB-Light/
 # ============================================================================
 install_gtk() {
   info "Installing GTK theme to ~/.themes/${GTK_THEME_NAME}/"
@@ -139,6 +139,7 @@ install_vscode() {
   mkdir -p /tmp/horizon-vsix/extension
   cp "${SCRIPT_DIR}/extras/vscode/package.json" /tmp/horizon-vsix/extension/
   cp "${SCRIPT_DIR}/extras/vscode/horizon-color-theme.json" /tmp/horizon-vsix/extension/
+  cp -r "${SCRIPT_DIR}/extras/vscode/icons" /tmp/horizon-vsix/extension/
 
   cd /tmp/horizon-vsix
   zip -r /tmp/horizon-theme.vsix extension >/dev/null

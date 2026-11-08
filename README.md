@@ -9,13 +9,13 @@ A light theme for Hyprland inspired by **Kai no Kiseki / Trails beyond the Horiz
 | Character | Hex | Usage |
 |-----------|-----|-------|
 | **Van Arkride** | `#1E3A5F` | Primary, functions |
-| **Kevin Graham** | `#2E7D32` | Strings, success |
+| **Kevin Graham** | `#1C5E24` | Strings, success |
 | **Rean Schwarzer** | `#4A423B` | Properties |
-| **Agnès Claudel** | `#AD1457` | Keywords |
+| **Agnès Claudel** | `#8C0F45` | Keywords |
 | **Emilia** | `#704700` | Constants |
 | **Grandmaster** | `#6A1B9A` | Decorators |
 | **Laegjarn's Chest** | `#005A4F` | Types, info |
-| **Horizon** | `#BF4400` | Warnings |
+| **Horizon** | `#8A3100` | Warnings |
 | **Aaron Wei** | `#C62828` | Errors |
 
 ## Structure
