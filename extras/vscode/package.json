@@ -7,13 +7,22 @@
   "engines": {
     "vscode": "^1.80.0"
   },
-  "categories": ["Themes"],
+  "categories": [
+    "Themes"
+  ],
   "contributes": {
     "themes": [
       {
         "label": "Horizon",
-        "uiTheme": "vs-light",
+        "uiTheme": "vs",
         "path": "./horizon-color-theme.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "horizon-icons",
+        "label": "Horizon Icons",
+        "path": "./icons/horizon-icon-theme.json"
       }
     ]
   }

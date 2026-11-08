@@ -10,34 +10,34 @@
 // Character Colors (darkened for light theme contrast)
 // ---------------------------
 // Van:                 #1E3A5F - Deep steel blue (Primary/Functions) - PROMINENT
-// Kevin:               #2E7D32 - Saturated green (Strings/Success) - PROMINENT
+// Kevin:               #1C5E24 - Saturated green (Strings/Success) - PROMINENT
 // Rean:                #4A423B - Dark warm brown (Properties) - PROMINENT
-// Agnès:               #AD1457 - Rich magenta (Keywords)
-// Emilia:              #704700 - Dark amber/brown (Constants) - darkened from #F57F17
-// Grandmaster:         #6A1B9A - Rich purple (Decorators)
-// Laegjarn's Chest:    #005A4F - Dark teal (Types/Info) - darkened from #00796B
-// Horizon:             #BF4400 - Dark burnt orange (Warnings) - darkened from #E65100
-// Aaron:               #C62828 - Vibrant red (Errors)
+// Agnès:               #8C0F45 - Rich magenta (Keywords)
+// Emilia:              #5C3A00 - Dark amber/brown (Constants) - darkened from #F57F17
+// Grandmaster:         #571583 - Rich purple (Decorators)
+// Laegjarn's Chest:    #00473E - Dark teal (Types/Info) - darkened from #005A4F
+// Horizon:             #8A3100 - Dark burnt orange (Warnings) - darkened from #8A3100
+// Aaron:               #9E1C1C - Vibrant red (Errors)
 
 // ============================================================================
 // Base Palette - Light Theme (Warm Gray from Kai art)
 // ============================================================================
 
 // Backgrounds (warm gray spectrum from promotional art)
-$bg0: #D8D4D0;      // Lightest - main background (from cal-w2410-m.jpg)
-$bg1: #CEC9C5;      // Sidebars, panels
-$bg2: #C4BFBA;      // Elevated surfaces
-$bg3: #BAB4AF;      // Hover states, selections
-$bg4: #A8A29D;      // Borders, separators
-$bg5: #8A8480;      // Strong borders, scrollbars
+$bg0: #CDC9C2;      // Lightest - main background (from cal-w2410-m.jpg)
+$bg1: #C5C1BA;      // Sidebars, panels
+$bg2: #BCB8B1;      // Elevated surfaces
+$bg3: #B3AFA8;      // Hover states, selections
+$bg4: #A19D96;      // Borders, separators
+$bg5: #837F79;      // Strong borders, scrollbars
 
 // Foregrounds (dark spectrum for contrast on light)
 $fg0: #1A1816;      // Darkest - headings, emphasis
 $fg1: #2A2826;      // Primary text
-$fg2: #3A3836;      // Body text
-$fg3: #5A5856;      // Subtle text, labels
-$fg4: #6A6866;      // Muted - comments, placeholders (darker for readability)
-$fg5: #8A8886;      // Very muted, disabled
+$fg2: #34322F;      // Body text
+$fg3: #4C4945;      // Subtle text, labels
+$fg4: #57534D;      // Muted - comments, placeholders (darker for readability)
+$fg5: #7A766F;      // Very muted, disabled
 
 // ============================================================================
 // Character Colors (Prominent: Van, Kevin, Rean)
@@ -48,36 +48,36 @@ $van: #1E3A5F;
 $van-bright: #2D4A6E;
 
 // Kevin Graham - Saturated green priest (PROMINENT)
-$kevin: #2E7D32;
-$kevin-bright: #4A7E2D;
+$kevin: #1C5E24;
+$kevin-bright: #2C6B30;
 
 // Rean Schwarzer - Dark warm brown Chevalier (PROMINENT)
 $rean: #4A423B;
 $rean-bright: #5A514A;
 
 // Agnès Claudel - Rich magenta wielder
-$agnes: #AD1457;
-$agnes-bright: #C2185B;
+$agnes: #8C0F45;
+$agnes-bright: #A01250;
 
 // Emilia - Dark amber/brown racer (darkened for light theme)
-$emilia: #704700;
-$emilia-bright: #8B5A00;
+$emilia: #5C3A00;
+$emilia-bright: #6B4500;
 
 // Grandmaster - Rich purple enigma
-$grandmaster: #6A1B9A;
-$grandmaster-bright: #7B1FA2;
+$grandmaster: #571583;
+$grandmaster-bright: #65189A;
 
 // Laegjarn's Chest - Dark teal artifact (darkened for light theme)
-$laegjarn: #005A4F;
-$laegjarn-bright: #00695C;
+$laegjarn: #00473E;
+$laegjarn-bright: #005A4F;
 
 // Horizon - Dark burnt orange (dawn/sunset motif, darkened for light theme)
-$horizon: #BF4400;
-$horizon-bright: #D04F00;
+$horizon: #8A3100;
+$horizon-bright: #A33D00;
 
 // Aaron Wei - Vibrant red swordsman
-$aaron: #C62828;
-$aaron-bright: #D32F2F;
+$aaron: #9E1C1C;
+$aaron-bright: #A82222;
 
 // ============================================================================
 // Semantic Mapping
@@ -95,23 +95,23 @@ $info: $laegjarn;
 // Terminal 16-Color Mapping (Light Theme)
 // ============================================================================
 
-$term-black: $fg2;               // #3A3836 (dark for light bg)
-$term-red: $aaron;               // #C62828
-$term-green: $kevin;             // #2E7D32
+$term-black: $fg2;               // #34322F (dark for light bg)
+$term-red: $aaron;               // #9E1C1C
+$term-green: $kevin;             // #1C5E24
 $term-yellow: $emilia;           // #F57F17
 $term-blue: $van;                // #1E3A5F
-$term-magenta: $grandmaster;     // #6A1B9A
-$term-cyan: $laegjarn;           // #00796B
-$term-white: $bg2;               // #C4BFBA
+$term-magenta: $grandmaster;     // #571583
+$term-cyan: $laegjarn;           // #005A4F
+$term-white: $bg2;               // #BCB8B1
 
-$term-bright-black: $fg4;                // #6A6866
-$term-bright-red: $aaron-bright;         // #D32F2F
-$term-bright-green: $kevin-bright;       // #4A7E2D
+$term-bright-black: $fg4;                // #57534D
+$term-bright-red: $aaron-bright;         // #A82222
+$term-bright-green: $kevin-bright;       // #2C6B30
 $term-bright-yellow: $emilia-bright;     // #F9A825
 $term-bright-blue: $van-bright;          // #2D4A6E
-$term-bright-magenta: $grandmaster-bright; // #7B1FA2
-$term-bright-cyan: $laegjarn-bright;     // #00897B
-$term-bright-white: $bg0;                // #D8D4D0
+$term-bright-magenta: $grandmaster-bright; // #65189A
+$term-bright-cyan: $laegjarn-bright;     // #00695C
+$term-bright-white: $bg0;                // #CDC9C2
 
 // ============================================================================
 // Syntax Highlighting Mapping

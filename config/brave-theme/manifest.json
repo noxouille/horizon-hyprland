@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Horizon",
+  "version": "1.0",
+  "description": "Horizon e-paper light theme",
+  "theme": {
+    "colors": {
+      "frame": [188, 184, 177],
+      "frame_inactive": [197, 193, 186],
+      "frame_incognito": [179, 175, 168],
+      "frame_incognito_inactive": [188, 184, 177],
+      "toolbar": [205, 201, 194],
+      "toolbar_text": [52, 50, 47],
+      "toolbar_button_icon": [76, 73, 69],
+      "tab_text": [52, 50, 47],
+      "tab_background_text": [76, 73, 69],
+      "tab_background_text_inactive": [76, 73, 69],
+      "bookmark_text": [52, 50, 47],
+      "omnibox_background": [197, 193, 186],
+      "omnibox_text": [52, 50, 47],
+      "ntp_background": [205, 201, 194],
+      "ntp_text": [52, 50, 47],
+      "ntp_link": [30, 58, 95],
+      "ntp_header": [30, 58, 95]
+    }
+  }
+}
