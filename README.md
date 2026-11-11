@@ -33,7 +33,7 @@ horizon-hyprland/
 │   ├── hyprland.conf
 │   ├── kitty.conf
 │   ├── logo.png                # Fastfetch logo
-│   ├── matugen-base.json       # Base colors for matugen/walset wallpaper picker
+│   ├── matugen-base.json       # Base colors for matugen and the Wallpaper Launcher (Alt+W)
 │   ├── nvim-theme
 │   ├── rofi.rasi
 │   ├── scripts/
@@ -42,7 +42,7 @@ horizon-hyprland/
 │   ├── vscodium-theme
 │   ├── wallpaper-default       # Default wallpaper path (relative to ~/Pictures/Wallpapers/)
 │   ├── wallpaper.jpg           # Fallback/sample wallpaper
-│   ├── wallpapers              # List of compatible wallpapers for walset picker
+│   ├── wallpapers              # List of compatible wallpapers for the Wallpaper Launcher (Alt+W)
 │   └── waybar-layout           # Default waybar layout for this theme
 │
 ├── extras/                   # Installed separately
@@ -122,16 +122,16 @@ The `waybar-layout` file specifies the default waybar layout when switching to t
 
 ### Wallpapers
 
-The theme includes wallpaper integration with the `walset` wallpaper picker:
+The theme includes wallpaper integration with the Wallpaper Launcher (Alt+W):
 
 - **`wallpaper-default`** - Path to the default wallpaper (relative to `~/Pictures/Wallpapers/`). Applied automatically when switching to this theme via `apply-theme.sh`.
 
-- **`wallpapers`** - List of compatible wallpapers for the theme. When this file exists, the `walset` picker will only show wallpapers from this list. Supports:
+- **`wallpapers`** - List of compatible wallpapers for the theme. When this file exists, the Wallpaper Launcher (Alt+W) will only show wallpapers from this list. Supports:
   - Individual files: `Trails/horizon/cal-w2408-m.jpg`
   - Glob patterns: `Trails/horizon/*`
   - Comments: Lines starting with `#`
 
-- **`matugen-base.json`** - Base colors for [matugen](https://github.com/InioX/matugen). Required for `walset` to work properly. Defines custom color variables (bg, fg, color0-15) that matugen templates use alongside wallpaper-extracted accent colors.
+- **`matugen-base.json`** - Base colors for [matugen](https://github.com/InioX/matugen). Required for the Wallpaper Launcher (Alt+W) to work properly. Defines custom color variables (bg, fg, color0-15) that matugen templates use alongside wallpaper-extracted accent colors.
 
 If `wallpapers` file doesn't exist, all wallpapers in `~/Pictures/Wallpapers/` are available.
 
