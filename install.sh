@@ -33,8 +33,16 @@ install_colorscheme() {
 
   mkdir -p ~/.config/colorschemes/${THEME_NAME}
 
-  # Copy all config files
-  cp -r "${SCRIPT_DIR}/config/"* ~/.config/colorschemes/${THEME_NAME}/
+  # Copy all config files except showcase.conf, which holds local
+  # settings (MUSIC_PATH) and is only copied if it doesn't exist yet
+  for f in "${SCRIPT_DIR}/config/"*; do
+    if [ "$(basename "$f")" != "showcase.conf" ]; then
+      cp -r "$f" ~/.config/colorschemes/${THEME_NAME}/
+    fi
+  done
+  if [ ! -e ~/.config/colorschemes/${THEME_NAME}/showcase.conf ]; then
+    cp "${SCRIPT_DIR}/config/showcase.conf" ~/.config/colorschemes/${THEME_NAME}/
+  fi
   cp -r "${SCRIPT_DIR}/colors" ~/.config/colorschemes/${THEME_NAME}/
 
   # Make scripts executable
