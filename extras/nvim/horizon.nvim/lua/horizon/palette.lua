@@ -63,4 +63,17 @@ M.colors = {
     none = "NONE",
 }
 
+-- Kitty and foot apply background_opacity only to cells whose background equals
+-- the terminal's default background. bg0 is also the kitty and foot background,
+-- so an editor painted in bg0 lets the wallpaper show through. Shift the blue
+-- channel by one step: the same color to the eye, but opaque in the terminal.
+local function opaque_twin(hex)
+    local r, g, b = hex:match("#(%x%x)(%x%x)(%x%x)")
+    b = tonumber(b, 16)
+    b = b > 0 and b - 1 or b + 1
+    return string.format("#%s%s%02X", r, g, b)
+end
+
+M.colors.bg_editor = opaque_twin(M.colors.bg0)
+
 return M

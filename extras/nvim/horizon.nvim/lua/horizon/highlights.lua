@@ -10,9 +10,9 @@ function M.setup(c)
     end
 
     -- Editor
-    hi("Normal", { fg = c.fg2, bg = c.bg0 })
+    hi("Normal", { fg = c.fg2, bg = c.bg_editor })
     hi("NormalFloat", { fg = c.fg0, bg = c.bg1 })
-    hi("NormalNC", { fg = c.fg3, bg = c.bg0 })
+    hi("NormalNC", { fg = c.fg3, bg = c.bg_editor })
     hi("FloatBorder", { fg = c.bg5, bg = c.bg1 })
     hi("FloatTitle", { fg = c.van, bg = c.bg1, bold = true })
 
@@ -22,8 +22,8 @@ function M.setup(c)
     hi("CursorLineNr", { fg = c.fg1, bold = true })
     hi("LineNr", { fg = c.bg5 })
 
-    hi("SignColumn", { fg = c.fg4, bg = c.bg0 })
-    hi("FoldColumn", { fg = c.bg5, bg = c.bg0 })
+    hi("SignColumn", { fg = c.fg4, bg = c.bg_editor })
+    hi("FoldColumn", { fg = c.bg5, bg = c.bg_editor })
     hi("Folded", { fg = c.fg4, bg = c.bg2 })
 
     hi("ColorColumn", { bg = c.bg2 })
@@ -64,7 +64,7 @@ function M.setup(c)
     -- Tabline
     hi("TabLine", { fg = c.fg4, bg = c.bg1 })
     hi("TabLineFill", { bg = c.bg1 })
-    hi("TabLineSel", { fg = c.fg0, bg = c.bg0, bold = true })
+    hi("TabLineSel", { fg = c.fg0, bg = c.bg_editor, bold = true })
 
     -- Statusline
     hi("StatusLine", { fg = c.fg2, bg = c.bg2 })
