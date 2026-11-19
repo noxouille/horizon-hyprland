@@ -43,7 +43,7 @@ horizon-hyprland/
 │   ├── wallpaper-default       # Default wallpaper path (relative to ~/Pictures/Wallpapers/)
 │   ├── wallpaper.jpg           # Fallback/sample wallpaper
 │   ├── wallpapers              # List of compatible wallpapers for the Wallpaper Launcher (Alt+W)
-│   └── waybar-layout           # Default Bar Layout for this theme (quartz-qs)
+│   └── waybar-layout           # Default Bar Layout for this theme (quartz)
 │
 ├── extras/                   # Installed separately
 │   ├── nvim/horizon.nvim/
@@ -118,7 +118,7 @@ Add to your `style.css`:
 @import "colors.css";
 ```
 
-The `waybar-layout` file names the Bar Layout to switch to with this theme: `quartz-qs`, the Quickshell bar. It can name a Waybar layout too.
+The `waybar-layout` file names the Bar Layout to switch to with this theme: `quartz`, the Quickshell bar. It can name a Waybar layout too.
 
 ### Wallpapers
 
