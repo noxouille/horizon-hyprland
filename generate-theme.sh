@@ -431,7 +431,7 @@ Or install all components:
 
 ## Components
 
-- **Colorscheme configs**: Hyprland, Kitty, Foot, Rofi, Waybar, GTK4
+- **Colorscheme configs**: Hyprland, Kitty, Foot, Rofi, GTK4
 - **GTK3 theme**: Full GTK3 theme with custom styling
 - **Neovim**: Complete colorscheme with Treesitter and LSP support
 - **VSCode/VSCodium**: Full editor theme

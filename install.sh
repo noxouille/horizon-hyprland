@@ -56,7 +56,6 @@ install_colorscheme() {
   echo "  Kitty:     include ~/.config/colorschemes/${THEME_NAME}/kittyconf"
   echo "  Foot:      include=~/.config/colorschemes/${THEME_NAME}/foot.ini"
   echo "  Rofi:      @theme \"~/.config/colorschemes/${THEME_NAME}/rofi.rasi\""
-  echo "  Waybar:    @import \"../../colorschemes/${THEME_NAME}/colors.css\";"
   echo "  GTK4:      cp ~/.config/colorschemes/${THEME_NAME}/gtk-4.0/gtk.css ~/.config/gtk-4.0/"
   echo ""
   info "Showcase scripts installed to ~/.config/colorschemes/${THEME_NAME}/scripts/"
