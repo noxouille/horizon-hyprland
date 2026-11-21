@@ -26,7 +26,7 @@ horizon-hyprland/
 │   └── palette.md
 │
 ├── config/                   # → ~/.config/colorschemes/horizon/
-│   ├── colors.css              # Shared colors (Waybar, wlogout, SwayNC)
+│   ├── colors.css              # Shared colors (wlogout, SwayNC)
 │   ├── foot.ini
 │   ├── gtk-4.0/gtk.css
 │   ├── gtk-theme               # GTK theme name for gsettings
@@ -43,7 +43,7 @@ horizon-hyprland/
 │   ├── wallpaper-default       # Default wallpaper path (relative to ~/Pictures/Wallpapers/)
 │   ├── wallpaper.jpg           # Fallback/sample wallpaper
 │   ├── wallpapers              # List of compatible wallpapers for the Wallpaper Launcher (Alt+W)
-│   └── waybar-layout           # Default Bar Layout for this theme (quartz)
+│   └── bar-layout              # Default Bar Layout for this theme (quartz)
 │
 ├── extras/                   # Installed separately
 │   ├── nvim/horizon.nvim/
@@ -112,13 +112,9 @@ Add to `~/.config/rofi/config.rasi`:
 @theme "horizon"
 ```
 
-### Waybar
-Add to your `style.css`:
-```css
-@import "colors.css";
-```
+### Bar Layout
 
-The `waybar-layout` file names the Bar Layout to switch to with this theme: `quartz`, the Quickshell bar. It can name a Waybar layout too.
+The `bar-layout` file names the Bar Layout to switch to with this theme: `quartz`, the Quickshell bar.
 
 ### Wallpapers
 
