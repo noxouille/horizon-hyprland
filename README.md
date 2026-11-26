@@ -43,7 +43,7 @@ horizon-hyprland/
 │   ├── wallpaper-default       # Default wallpaper path (relative to ~/Pictures/Wallpapers/)
 │   ├── wallpaper.jpg           # Fallback/sample wallpaper
 │   ├── wallpapers              # List of compatible wallpapers for the Wallpaper Launcher (Alt+W)
-│   └── bar-layout              # Default Bar Layout for this theme (quartz)
+│   └── bar-layout              # Default Bar Layout for this theme (frame)
 │
 ├── extras/                   # Installed separately
 │   ├── nvim/horizon.nvim/
@@ -114,7 +114,7 @@ Add to `~/.config/rofi/config.rasi`:
 
 ### Bar Layout
 
-The `bar-layout` file names the Bar Layout to switch to with this theme: `quartz`, the Quickshell bar.
+The `bar-layout` file names the Bar Layout to switch to with this theme: `frame`, the Quickshell bar's Frame Bar Layout.
 
 ### Wallpapers
 
